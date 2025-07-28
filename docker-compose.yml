@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  flowise:
+    image: flowise-dd:2.0.0
+    build: .
+    container_name: flowise-app
+    ports:
+      - "3000:3000"
+    environment:
+      # Datadog agent connection
+      - DD_AGENT_HOST=datadog-agent
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_DOGSTATSD_PORT=8125
+
+      # Datadog metadata
+      - DD_SERVICE=${DD_SERVICE}
+      - DD_ENV=${DD_ENV}
+      - DD_VERSION=1.0.0
+      - DD_SITE=${DD_SITE}
+      - DD_API_KEY=${DD_API_KEY}
+
+      # AI Observability
+      - DD_LLMOBS_ENABLED=true
+      - DD_LLMOBS_TRACE_ENABLED=true
+      - DD_LLMOBS_ML_APP=flowise-app
+
+      # Framework instrumentation (Node.js auto-tracing)
+      - DD_TRACE_LANGCHAIN_ENABLED=true
+      - DD_TRACE_OPENAI_ENABLED=true
+      - DD_TRACE_ANTHROPIC_ENABLED=true
+
+      # Logging
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_INJECTION=true
+
+      # Flowise-specific settings
+      - DATABASE_PATH=/opt/flowise/.flowise
+      - APIKEY_PATH=/opt/flowise/.flowise
+      - LOG_LEVEL=debug
+      - DEBUG=true
+
+    volumes:
+      - flowise_data:/opt/flowise/.flowise
+
+    depends_on:
+      - datadog-agent
+
+    networks:
+      - flowise-network
+
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "nodejs", "service": "flowise-langchain", "log_processing_rules": [{"type": "multi_line", "name": "log_start_with_date", "pattern": "\\d{4}-\\d{2}-\\d{2}"}]}]'
+      com.datadoghq.tags.service: "flowise-langchain"
+      com.datadoghq.tags.env: "${DD_ENV}"
+      com.datadoghq.tags.version: "1.0.0"
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:latest
+    container_name: datadog-agent
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=${DD_SITE}
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+
+      # Logging and container monitoring
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_LOGS_CONFIG_AUTO_MULTI_LINE_DETECTION=true
+      - DD_CONTAINER_EXCLUDE=name:datadog-agent
+      - DD_CONTAINER_INCLUDE_LOGS=name:.*flowise.*
+
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_AC_EXCLUDE=name:datadog-agent
+
+    ports:
+      - "8126:8126"        # APM port
+      - "8125:8125/udp"    # DogStatsD
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+
+    networks:
+      - flowise-network
+
+volumes:
+  flowise_data:
+
+networks:
+  flowise-network:
+    driver: bridge

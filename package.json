@@ -1,0 +1,19 @@
+{
+  "name": "flowise-test",
+  "version": "1.0.0",
+  "description": "Flowise + LangChain with Datadog AI Observability",
+  "main": "index.js",
+  "scripts": {
+    "start": "node start-instrumented.js"
+  },
+  "dependencies": {
+    "dd-trace": "^5.0.0",
+    "flowise": "^1.5.0",     
+    "langchain": "^0.0.150", 
+    "dotenv": "^16.0.3",
+    "winston": "^3.11.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
