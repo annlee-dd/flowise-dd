@@ -37,7 +37,7 @@ This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar co
    DD_SERVICE=flowise-langchain
    DD_ENV=dev
 
-3. **Build and run the containers:*
+3. **Build and run the containers**:
     docker-compose build --no-cache
     docker-compose up -d
 
@@ -50,8 +50,8 @@ This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar co
 2. **Create a LangChain-based workflow**:
    - Use **Conversational Chains** or **Agent** nodes to trigger LLM calls.
    - These interactions will be **traced and logged in Datadog**.
-3. **Get/ create OpenAI API Key**:
-   [https://platform.openai.com/api-keys] (https://platform.openai.com/api-keys)
+3. **Get OpenAI API Key**:
+   [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 
 ---
 
