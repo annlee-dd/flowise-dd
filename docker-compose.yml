@@ -1,6 +1,6 @@
 services:
   flowise:
-    image: flowise-dd:2.1.0
+    image: flowise-dd:2.1.2
     build: .
     container_name: flowise-app
     ports:
