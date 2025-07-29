@@ -1,8 +1,8 @@
-FROM flowiseai/flowise:latest
+FROM flowiseai/flowise:3.0.4
 
 WORKDIR /app
 
-RUN npm install dd-trace@^5.0.0
+RUN npm install dd-trace@^5.0.0 
 
 # DD Agent Container level config
 ENV DD_LLMOBS_ENABLED=1 \

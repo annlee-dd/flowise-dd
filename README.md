@@ -9,6 +9,14 @@ This setup instruments the [Flowise](https://github.com/FlowiseAI/Flowise) low-c
 ### 🐳 Dockerfile
 This Dockerfile extends the official Flowise image to enable **Datadog Node.js tracing** via the `dd-trace` library. It configures automatic instrumentation of Flowise at startup using the `NODE_OPTIONS` environment variable and Datadog’s AI observability settings.
 
+➡️ **Refer to their Docker Hub repositories for the latest versions:**
+- [FlowiseAI Docker Hub](https://hub.docker.com/r/flowiseai/flowise)
+- [Datadog Agent Docker Hub](https://hub.docker.com/r/datadog/agent)
+
+This solution is built on:
+- Flowise v`3.0.4`
+- Datadog Agent v`7.0.0` 
+
 ### 📜 Startup Script
 A custom script bootstraps Datadog tracing before Flowise launches. It enables AI observability for LangChain, OpenAI, Anthropic, Bedrock, and VertexAI — allowing **end-to-end prompt tracing** and metadata tagging in Datadog.
 
@@ -50,8 +58,9 @@ This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar co
 2. **Create a LangChain-based workflow**:
    - Use **Conversational Chains** or **Agent** nodes to trigger LLM calls.
    - These interactions will be **traced and logged in Datadog**.
-3. **Get OpenAI API Key**:
-   [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+3. **Model Access**:
+   - [OpenAI API Keys](https://platform.openai.com/api-keys)
+   - [Anthropic (Claude) API Keys](https://console.anthropic.com/account/keys)
 
 ---
 

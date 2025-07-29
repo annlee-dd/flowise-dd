@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "dd-trace": "^5.0.0",
-    "flowise": "^1.5.0",     
+    "flowise": "^3.0.0",     
     "langchain": "^0.0.150", 
     "dotenv": "^16.0.3",
     "winston": "^3.11.0"

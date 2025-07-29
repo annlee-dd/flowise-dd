@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   flowise:
-    image: flowise-dd:2.0.0
+    image: flowise-dd:2.1.0
     build: .
     container_name: flowise-app
     ports:
@@ -62,7 +60,7 @@ services:
         max-file: "3"
 
   datadog-agent:
-    image: gcr.io/datadoghq/agent:latest
+    image: datadog/agent:7
     container_name: datadog-agent
     environment:
       - DD_API_KEY=${DD_API_KEY}
