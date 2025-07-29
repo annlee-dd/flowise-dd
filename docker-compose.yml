@@ -1,6 +1,6 @@
 services:
   flowise:
-    image: flowise-dd:2.1.2
+    image: flowise-dd:2.1.3
     build: .
     container_name: flowise-app
     ports:
@@ -27,6 +27,8 @@ services:
       - DD_TRACE_LANGCHAIN_ENABLED=true
       - DD_TRACE_OPENAI_ENABLED=true
       - DD_TRACE_ANTHROPIC_ENABLED=true
+      # - DD_TRACE_BEDROCK_ENABLED=true
+      # - DD_TRACE_VERTEXAI_ENABLED=true
 
       # Logging
       - DD_LOGS_ENABLED=true
