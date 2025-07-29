@@ -1,6 +1,6 @@
 services:
   flowise:
-    image: flowise-dd:2.1.3
+    image: flowise-dd:${DD_VERSION}
     build: .
     container_name: flowise-app
     ports:
@@ -14,14 +14,14 @@ services:
       # Datadog metadata
       - DD_SERVICE=${DD_SERVICE}
       - DD_ENV=${DD_ENV}
-      - DD_VERSION=1.0.0
+      - DD_VERSION=${DD_VERSION}
       - DD_SITE=${DD_SITE}
       - DD_API_KEY=${DD_API_KEY}
 
       # AI Observability
       - DD_LLMOBS_ENABLED=true
       - DD_LLMOBS_TRACE_ENABLED=true
-      - DD_LLMOBS_ML_APP=flowise-app
+      - DD_LLMOBS_ML_APP=${DD_LLMOBS_ML_APP}
 
       # Framework instrumentation (Node.js auto-tracing)
       - DD_TRACE_LANGCHAIN_ENABLED=true
@@ -50,10 +50,10 @@ services:
       - flowise-network
 
     labels:
-      com.datadoghq.ad.logs: '[{"source": "nodejs", "service": "flowise-langchain", "log_processing_rules": [{"type": "multi_line", "name": "log_start_with_date", "pattern": "\\d{4}-\\d{2}-\\d{2}"}]}]'
-      com.datadoghq.tags.service: "flowise-langchain"
+      com.datadoghq.ad.logs: '[{"source": "nodejs", "service": "${DD_SERVICE}", "log_processing_rules": [{"type": "multi_line", "name": "log_start_with_date", "pattern": "\\d{4}-\\d{2}-\\d{2}"}]}]'
+      com.datadoghq.tags.service: "${DD_SERVICE}"
       com.datadoghq.tags.env: "${DD_ENV}"
-      com.datadoghq.tags.version: "1.0.0"
+      com.datadoghq.tags.version: "${DD_VERSION}"
 
     logging:
       driver: "json-file"

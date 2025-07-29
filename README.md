@@ -17,9 +17,6 @@ This solution is built on:
 - Flowise v`3.0.4`
 - Datadog Agent v`7.0.0` 
 
-### 📜 Startup Script
-A custom script bootstraps Datadog tracing before Flowise launches. It enables AI observability for LangChain, OpenAI, Anthropic, Bedrock, and VertexAI — allowing **end-to-end prompt tracing** and metadata tagging in Datadog.
-
 ### 🧱 Docker Compose
 This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar container** that captures APM, logs, and metrics. It provides full observability for Flowise workflows and LLM usage.
 
@@ -43,7 +40,10 @@ This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar co
    DD_API_KEY=your-datadog-api-key
    DD_SITE=datadoghq.com            # or datadoghq.eu / datadoghq.us depending on region
    DD_SERVICE=flowise-langchain
+   DD_LLMOBS_ML_APP=flowise-app
    DD_ENV=dev
+   DD_VERSION=1.0.0
+   DD_SITE=             #optional
 
 3. **Build and run the containers**:
     docker-compose build --no-cache
