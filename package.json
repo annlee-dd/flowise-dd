@@ -1,11 +1,8 @@
 {
-  "name": "flowise-test",
-  "version": "1.0.0",
+  "name": "${DD_SERVICE}",
+  "version": "${DD_VERSION}",
   "description": "Flowise + LangChain with Datadog AI Observability",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
+  "scripts": {},
   "dependencies": {
     "dd-trace": "^5.0.0",
     "flowise": "^3.0.0",     
