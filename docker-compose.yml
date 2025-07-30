@@ -1,7 +1,11 @@
 services:
   flowise:
     image: flowise-dd:${DD_VERSION}
-    build: .
+    build: 
+      context: .
+      args:
+        FLOWISE_VERSION: ${FLOWISE_VERSION}
+        DD_TRACE_VERSION: ${DD_TRACE_VERSION}
     container_name: flowise-app
     ports:
       - "3000:3000"

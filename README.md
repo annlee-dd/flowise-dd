@@ -42,8 +42,10 @@ This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar co
    DD_SERVICE=flowise-langchain
    DD_LLMOBS_ML_APP=flowise-app
    DD_ENV=dev
-   DD_VERSION=1.0.0
+   DD_VERSION=1.0.x
    DD_SITE=             #optional
+   FLOWISE_VERSION=3.0.4         # update versions as required
+   DD_TRACE_VERSION=5.0.0        # update versions as required
 
 3. **Build and run the containers**:
     docker-compose build --no-cache
