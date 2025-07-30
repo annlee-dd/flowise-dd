@@ -9,13 +9,14 @@ This setup instruments the [Flowise](https://github.com/FlowiseAI/Flowise) low-c
 ### 🐳 Dockerfile
 This Dockerfile extends the official Flowise image to enable **Datadog Node.js tracing** via the `dd-trace` library. It configures automatic instrumentation of Flowise at startup using the `NODE_OPTIONS` environment variable and Datadog’s AI observability settings.
 
-➡️ **Refer to their Docker Hub repositories for the latest versions:**
+**Refer to their Docker Hub repositories for the latest versions:**
 - [FlowiseAI Docker Hub](https://hub.docker.com/r/flowiseai/flowise)
 - [Datadog Agent Docker Hub](https://hub.docker.com/r/datadog/agent)
 
-This solution is built on:
+This solution is built on the following versions:
 - Flowise v`3.0.4`
 - Datadog Agent v`7.0.0` 
+- Datadog Travce library v`5.0.0` 
 
 ### 🧱 Docker Compose
 This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar container** that captures APM, logs, and metrics. It provides full observability for Flowise workflows and LLM usage.
@@ -37,15 +38,18 @@ This Docker Compose setup deploys Flowise alongside a **Datadog Agent sidecar co
 
 2. **Create a `.env` file** with the following contents:
    ```env
+   # Datadog Service Conf
    DD_API_KEY=your-datadog-api-key
    DD_SITE=datadoghq.com            # or datadoghq.eu / datadoghq.us depending on region
    DD_SERVICE=flowise-langchain
    DD_LLMOBS_ML_APP=flowise-app
    DD_ENV=dev
-   DD_VERSION=1.0.x
-   DD_SITE=             #optional
-   FLOWISE_VERSION=3.0.4         # update versions as required
-   DD_TRACE_VERSION=5.0.0        # update versions as required
+   DD_VERSION=1.0.0
+
+   # Application Configs (update versions as required)
+   FLOWISE_VERSION=3.0.4
+   DD_AGENT_VERSION=7
+   DD_TRACE_VERSION=5.0.0
 
 3. **Build and run the containers**:
     docker-compose build --no-cache
